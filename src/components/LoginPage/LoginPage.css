@@ -1,0 +1,87 @@
+/* ======================== LoginPage ======================== */
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--spacing-lg);
+  background-color: var(--color-page-background);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 400px;
+  padding: var(--spacing-xxl);
+  background-color: var(--color-card-background);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+}
+
+.login-form__title {
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.login-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.login-form__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.login-form__input {
+  padding: var(--spacing-md);
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  background-color: var(--color-input-background);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.login-form__input::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+.login-form__input:focus {
+  border-color: var(--color-input-focus-border);
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+}
+
+.login-form__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: #ffffff;
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  margin-top: var(--spacing-sm);
+}
+
+.login-form__button:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.login-form__button:active {
+  background-color: var(--color-primary-active);
+  transform: scale(0.98);
+}

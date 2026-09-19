@@ -7,7 +7,7 @@ React + TypeScript + Vite. Plain CSS only. No Tailwind, no UI libraries.
 - One component per folder: src/components/LoginForm/LoginForm.tsx
 - Colocated styles: src/components/LoginForm/LoginForm.css
 - Hooks >50 lines extracted to src/hooks/use\*.ts
-- API types: src/types/api.ts | constants: src/constants/
+- API types: src/types/api.ts | constants: src/const/
 
 # BEM rules (strict)
 
