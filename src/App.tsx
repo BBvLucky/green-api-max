@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 
-import LoginPage from "./components/LoginPage/LoginPage";
-import CreateChatPage from "./components/CreateChatPage/CreateChatPage";
-import ChatPage from "./components/ChatPage/ChatPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import CreateChatPage from "./pages/CreateChatPage/CreateChatPage";
+import ChatPage from "./pages/ChatPage/ChatPage";
 import type { Page } from "./types/app";
 import { STORAGE_KEY } from "./const";
 

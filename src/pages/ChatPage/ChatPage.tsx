@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 
+import MessageBubble from "../../components/MessageBubble/MessageBubble";
+import InputWithButton from "../../components/InputWithButton/InputWithButton";
+
 import "./ChatPage.css";
 
 interface ChatPageProps {
@@ -54,31 +57,26 @@ function ChatPage({ chatId, onLogout }: ChatPageProps) {
 
       <div className="chat-page__messages">
         {messages.map((message) => (
-          <div
+          <MessageBubble
             key={message.id}
-            className={`chat-page__message chat-page__message--${message.sender}`}
-          >
-            <div className="chat-page__message-text">{message.text}</div>
-            <span className="chat-page__message-time">
-              {message.timestamp.toLocaleTimeString()}
-            </span>
-          </div>
+            text={message.text}
+            sender={message.sender}
+            timestamp={message.timestamp}
+          />
         ))}
         <div ref={messagesEndRef} />
       </div>
 
       <div className="chat-page__input-section">
-        <input
-          type="text"
-          className="chat-page__input"
+        <InputWithButton
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           onKeyDown={handleKeyDown}
+          onButtonClick={handleSendMessage}
+          buttonLabel="Отправить"
           placeholder="Введите сообщение"
+          rounded
         />
-        <button className="chat-page__send-button" onClick={handleSendMessage}>
-          Отправить
-        </button>
       </div>
     </div>
   );
