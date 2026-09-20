@@ -27,6 +27,7 @@ function App() {
     setCurrentPage("login");
   };
 
+  // Упрощение для тестового задания. "По-хорошему" нужно использовать роутинг
   const renderPage = () => {
     switch (currentPage) {
       case "login":

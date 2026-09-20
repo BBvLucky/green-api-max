@@ -12,6 +12,8 @@ interface InputWithButtonProps {
   error?: string;
   rounded?: boolean;
   className?: string;
+  inputDisabled?: boolean;
+  btnDisabled?: boolean;
 }
 
 function InputWithButton({
@@ -24,6 +26,8 @@ function InputWithButton({
   error,
   rounded = false,
   className = "",
+  btnDisabled,
+  inputDisabled,
 }: InputWithButtonProps) {
   const inputClassName = `input-with-button__input${
     error ? " input-with-button__input--error" : ""
@@ -45,8 +49,13 @@ function InputWithButton({
           onChange={onChange}
           onKeyDown={onKeyDown}
           placeholder={placeholder}
+          disabled={inputDisabled}
         />
-        <button className={buttonClassName} onClick={onButtonClick}>
+        <button
+          className={buttonClassName}
+          onClick={onButtonClick}
+          disabled={btnDisabled}
+        >
           {buttonLabel}
         </button>
       </div>

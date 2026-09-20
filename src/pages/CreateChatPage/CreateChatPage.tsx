@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import InputWithButton from "../../components/InputWithButton/InputWithButton";
+import { useCheckAccount } from "../../hooks/useCheckAccount";
 
 import "./CreateChatPage.css";
 
@@ -10,37 +11,43 @@ interface CreateChatPageProps {
 }
 
 function CreateChatPage({ onStartChat, onLogout }: CreateChatPageProps) {
-  const [chatId, setChatId] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
 
-  const handleConfirmChat = () => {
-    if (!chatId.trim()) {
-      setError("Введите ID чата");
+  const { isLoading, error: checkError, check, data } = useCheckAccount();
+
+  const handleConfirmChat = async () => {
+    if (!phoneNumber.trim()) {
+      setError("Введите номер телефона");
       return;
     }
     setError("");
-    onStartChat(chatId.trim());
+    await check(+phoneNumber);
+    if (data?.exist) {
+      onStartChat(data.chatId);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChatId(e.target.value);
+    setPhoneNumber(e.target.value);
     if (error) {
       setError("");
     }
   };
-
 
   return (
     <div className="create-chat-page">
       <div className="create-chat-page__content">
         <h1 className="create-chat-page__title">Создание чата</h1>
         <InputWithButton
-          value={chatId}
+          value={phoneNumber}
           onChange={handleInputChange}
           onButtonClick={handleConfirmChat}
           buttonLabel="Начать чат"
           placeholder="Введите ID чата"
-          error={error}
+          error={error || checkError}
+          btnDisabled={isLoading ?? error}
+          inputDisabled={isLoading}
         />
         <button className="create-chat-page__logout-button" onClick={onLogout}>
           Выйти
