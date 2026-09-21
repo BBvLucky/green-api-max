@@ -1,25 +1,18 @@
-import { type ChangeEvent } from "react";
-
 import "./InputWithLabel.css";
 
-interface InputWithLabelProps {
+interface InputWithLabelProps extends React.ComponentPropsWithoutRef<"input"> {
   label: string;
   id: string;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  type?: "text" | "password" | "email" | "number";
   className?: string;
+  error?: string;
 }
 
 function InputWithLabel({
   label,
   id,
-  value,
-  onChange,
-  placeholder,
-  type = "text",
   className = "",
+  error,
+  ...otherProps
 }: InputWithLabelProps) {
   return (
     <div className="input-with-label">
@@ -28,12 +21,10 @@ function InputWithLabel({
       </label>
       <input
         id={id}
-        type={type}
         className={`input-with-label__input${className ? ` ${className}` : ""}`}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
+        {...otherProps}
       />
+      {error && <span className="input-with-label__error">{error}</span>}
     </div>
   );
 }

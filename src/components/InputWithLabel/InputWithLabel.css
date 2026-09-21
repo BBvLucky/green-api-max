@@ -32,3 +32,10 @@
 .input-with-label__input:focus {
   border-color: var(--color-input-focus-border);
 }
+
+.input-with-label__error {
+  font-size: var(--font-size-sm);
+  color: var(--color-error-color);
+  text-align: left;
+  /* min-height: var(--spacing-lg); */
+}

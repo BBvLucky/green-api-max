@@ -1,14 +1,8 @@
-import { type ChangeEvent, type KeyboardEvent } from "react";
-
 import "./InputWithButton.css";
 
-interface InputWithButtonProps {
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+interface InputWithButtonProps extends React.ComponentPropsWithoutRef<"input"> {
   onButtonClick: () => void;
   buttonLabel: string;
-  placeholder?: string;
-  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   error?: string;
   rounded?: boolean;
   className?: string;

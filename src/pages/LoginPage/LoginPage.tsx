@@ -12,16 +12,43 @@ interface LoginPageProps {
 function LoginPage({ onLogin }: LoginPageProps) {
   const [idInstance, setIdInstance] = useState("");
   const [apiTokenInstance, setApiTokenInstance] = useState("");
+  const [errorIdInstance, setErrorIdInstance] = useState("");
+  const [errorApiToken, setApiTokenError] = useState("");
 
   const handleSubmit = useCallback(
     (e: SubmitEvent) => {
       e.preventDefault();
+      if (!idInstance) {
+        setErrorIdInstance("Обязательное поле");
+        return;
+      }
+      if (!apiTokenInstance.trim()) {
+        setApiTokenError("Обязательное поле");
+        return;
+      }
+
       const credentials = { idInstance, apiTokenInstance };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(credentials));
       onLogin();
     },
     [apiTokenInstance, idInstance, onLogin],
   );
+
+  const handleOnIdInstanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (errorIdInstance) {
+      setErrorIdInstance("");
+    }
+    setIdInstance(e.target.value);
+  };
+
+  const handleOnApiTokenInstanceChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (errorApiToken) {
+      setApiTokenError("");
+    }
+    setApiTokenInstance(e.target.value);
+  };
 
   return (
     <div className="login-page">
@@ -32,20 +59,26 @@ function LoginPage({ onLogin }: LoginPageProps) {
           label="ID Instance"
           id="idInstance"
           value={idInstance}
-          onChange={(e) => setIdInstance(e.target.value)}
+          onChange={handleOnIdInstanceChange}
           placeholder="Введите idInstance"
+          error={errorIdInstance}
         />
 
         <InputWithLabel
           label="API Token Instance"
           id="apiTokenInstance"
           value={apiTokenInstance}
-          onChange={(e) => setApiTokenInstance(e.target.value)}
+          onChange={handleOnApiTokenInstanceChange}
           placeholder="Введите apiTokenInstance"
           type="password"
+          error={errorApiToken}
         />
 
-        <button type="submit" className="login-form__button">
+        <button
+          type="submit"
+          className="login-form__button"
+          disabled={!!errorIdInstance || !!errorIdInstance}
+        >
           Войти
         </button>
       </form>
