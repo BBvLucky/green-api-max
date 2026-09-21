@@ -47,7 +47,7 @@ function ChatPage({ chatId, onLogout }: ChatPageProps) {
       const newIncomingMessage: Message = {
         id: incomingMessage.id,
         text: incomingMessage.text,
-        sender: "other", // Это входящее сообщение от собеседника
+        sender: "other",
         timestamp: new Date(incomingMessage.timestamp),
       };
 
@@ -103,6 +103,7 @@ function ChatPage({ chatId, onLogout }: ChatPageProps) {
       </div>
 
       <div className="chat-page__messages">
+        {/* решение для демо, "по-хорошему" тут лучше использовать виртуализированный список */}
         {messages.map((message) => (
           <MessageBubble
             key={message.id}

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { buildInstanceUrl } from "../utils/buildInstanceUrl";
 
@@ -14,15 +14,20 @@ export function useGetMessage() {
   const [message, setMessage] = useState<IncomingMessage>();
 
   const isPollingRef = useRef(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const startPolling = useCallback(() => {
     if (isPollingRef.current) return;
     isPollingRef.current = true;
     async function run() {
       while (isPollingRef.current) {
+        const controller = new AbortController();
+        abortControllerRef.current = controller;
+
         try {
           const res = await fetch(
             `${buildInstanceUrl("receiveNotification")}?receiveTimeout=60`,
+            { signal: controller.signal },
           );
           const text = await res.text();
 
@@ -50,7 +55,11 @@ export function useGetMessage() {
               { method: "DELETE" },
             );
           }
-        } catch {
+        } catch (error: unknown) {
+          if (error instanceof Error && error.name === "AbortError") {
+            break;
+          }
+
           await new Promise((resolve) => setTimeout(resolve, 5000));
         }
       }
@@ -60,7 +69,17 @@ export function useGetMessage() {
 
   const stopPolling = useCallback(() => {
     isPollingRef.current = false;
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
   }, []);
+
+  useEffect(() => {
+    return () => {
+      stopPolling();
+    };
+  }, [stopPolling]);
 
   return { message, startPolling, stopPolling };
 }

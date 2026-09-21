@@ -11,7 +11,10 @@ function MessageBubble({ text, sender, timestamp }: MessageBubbleProps) {
     <div className={`message-bubble message-bubble--${sender}`}>
       <div className="message-bubble__text">{text}</div>
       <span className="message-bubble__time">
-        {timestamp.toLocaleTimeString()}
+        {timestamp.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
       </span>
     </div>
   );
